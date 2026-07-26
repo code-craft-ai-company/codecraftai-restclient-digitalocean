@@ -190,7 +190,7 @@ requests = "^2.32.5"
 type = "git"
 url = "https://github.com/automationmojo/codecraftai-restclient-base.git"
 reference = "main"
-resolved_reference = "91a7a7931aa1fa1892be2549853883c9bf7ab5bc"
+resolved_reference = "7519ed4809b8daa1da0fc53efe7014c4d9016fb2"
 
 [[package]]
 name = "colorama"
