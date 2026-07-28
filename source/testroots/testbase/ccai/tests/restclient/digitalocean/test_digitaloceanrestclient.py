@@ -11,7 +11,7 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
 
 from ccai.restclient.digitalocean.digitaloceanapierror import (
     DigitalOceanApiRequestError
@@ -85,7 +85,7 @@ def test_error_reason_comes_from_the_message_field():
                       payload={"id": "unprocessable_entity",
                                "message": "name already exists"}))
 
-    with pytest.raises(DigitalOceanApiRequestError) as caught:
+    with testbase.raises(DigitalOceanApiRequestError) as caught:
         client.vpcs.list()
 
     assert caught.value.status == 422
@@ -99,7 +99,7 @@ def test_error_falls_back_to_the_http_reason():
                   response=FakeResponse(status_code=500,
                                         reason="Server Error", text="boom"))
 
-    with pytest.raises(DigitalOceanApiRequestError) as caught:
+    with testbase.raises(DigitalOceanApiRequestError) as caught:
         client.vpcs.list()
 
     assert caught.value.reason == "Server Error"
@@ -111,7 +111,7 @@ def test_error_falls_back_to_the_http_reason():
 # collection paths
 # ----------------------------------------------------------------------
 
-@pytest.mark.parametrize("group_name,path", [
+@testbase.parametrize("group_name,path", [
     ("vpcs", "/vpcs"),
     ("firewalls", "/firewalls"),
     ("droplets", "/droplets"),
@@ -145,7 +145,7 @@ def test_ssh_keys_live_under_account_keys():
 # creates
 # ----------------------------------------------------------------------
 
-@pytest.mark.parametrize("group_name,singular", [
+@testbase.parametrize("group_name,singular", [
     ("vpcs", "vpc"),
     ("firewalls", "firewall"),
     ("droplets", "droplet"),

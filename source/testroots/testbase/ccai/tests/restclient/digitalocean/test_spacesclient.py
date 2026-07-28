@@ -11,7 +11,7 @@ __copyright__ = "Copyright 2026, Code Craft AI LLC"
 __credits__ = []
 
 
-import pytest
+from ccai import testbase
 
 from ccai.restclient.digitalocean.digitaloceanapierror import (
     SpacesRequestError
@@ -186,7 +186,7 @@ def test_missing_bucket_reports_the_s3_error_code():
                   response=FakeResponse(status_code=404, reason="Not Found",
                                         text=NO_SUCH_BUCKET_XML))
 
-    with pytest.raises(SpacesRequestError) as caught:
+    with testbase.raises(SpacesRequestError) as caught:
         client._request(method="GET", path="/my-bucket")
 
     assert caught.value.status == 404
@@ -200,7 +200,7 @@ def test_error_code_is_read_through_the_xml_namespace():
                   response=FakeResponse(status_code=409, reason="Conflict",
                                         text=NAMESPACED_ERROR_XML))
 
-    with pytest.raises(SpacesRequestError) as caught:
+    with testbase.raises(SpacesRequestError) as caught:
         client.delete_bucket(Bucket="my-bucket")
 
     # S3 responses are namespaced and whether an endpoint declares the
@@ -215,7 +215,7 @@ def test_bodiless_failure_falls_back_to_the_status_as_code():
                   response=FakeResponse(status_code=404, reason="Not Found",
                                         text=""))
 
-    with pytest.raises(SpacesRequestError) as caught:
+    with testbase.raises(SpacesRequestError) as caught:
         client.head_bucket(Bucket="my-bucket")
 
     # A failed HEAD carries no body, and callers decide "absent vs broken" on
@@ -231,7 +231,7 @@ def test_unparseable_body_falls_back_to_the_status_as_code():
                   response=FakeResponse(status_code=403, reason="Forbidden",
                                         text="not xml at all <<<"))
 
-    with pytest.raises(SpacesRequestError) as caught:
+    with testbase.raises(SpacesRequestError) as caught:
         client.head_bucket(Bucket="my-bucket")
 
     assert caught.value.code == "403"
@@ -244,7 +244,7 @@ def test_auth_failure_is_not_reported_as_a_missing_bucket():
                   response=FakeResponse(status_code=403, reason="Forbidden",
                                         text=""))
 
-    with pytest.raises(SpacesRequestError) as caught:
+    with testbase.raises(SpacesRequestError) as caught:
         client.head_bucket(Bucket="my-bucket")
 
     # Masking an auth failure as "does not exist" would make an apply try to
