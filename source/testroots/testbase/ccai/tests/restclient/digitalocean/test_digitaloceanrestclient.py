@@ -20,7 +20,7 @@ from ccai.restclient.digitalocean.digitaloceanrestclient import (
     DigitalOceanRestClient
 )
 
-from ccai.tests.restclient.digitalocean.fakesession import (
+from .fakesession import (
     FakeResponse, FakeSession
 )
 

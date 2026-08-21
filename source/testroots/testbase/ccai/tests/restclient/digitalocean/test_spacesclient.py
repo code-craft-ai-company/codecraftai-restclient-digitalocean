@@ -18,7 +18,7 @@ from ccai.restclient.digitalocean.digitaloceanapierror import (
 )
 from ccai.restclient.digitalocean.spacesclient import SpacesClient
 
-from ccai.tests.restclient.digitalocean.fakesession import (
+from .fakesession import (
     FakeResponse, FakeSession
 )
 
