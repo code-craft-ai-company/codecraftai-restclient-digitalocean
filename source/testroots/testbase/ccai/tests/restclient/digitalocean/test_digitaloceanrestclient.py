@@ -73,7 +73,8 @@ def test_delete_tolerates_a_bodiless_response():
     session.queue(method="DELETE", path="/vpcs/v1",
                   response=FakeResponse(status_code=204, text=""))
 
-    assert client.vpcs.delete(vpc_id="v1") == {}
+    result = client.vpcs.delete(vpc_id="v1")
+    assert result == {}
     return
 
 
