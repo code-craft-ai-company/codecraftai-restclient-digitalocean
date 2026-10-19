@@ -1,6 +1,6 @@
-==================================
+===================================
 codecraftai-restclient-digitalocean
-==================================
+===================================
 
 A pure-Python client for the `DigitalOcean API v2
 <https://docs.digitalocean.com/reference/api/>`_ and for Spaces, its
@@ -56,7 +56,7 @@ The Spaces client
 
 The method and keyword names mirror the S3 surface — including the capitalised
 ``Bucket`` — so call sites written against an S3 SDK keep their shape.
-Signing comes from :mod:`ccai.restclient.base.awssigv4`, shared with AWS and
+Signing comes from ``ccai.restclient.base.awssigv4``, shared with AWS and
 any other S3-compatible store.
 
 Design notes
@@ -68,7 +68,7 @@ virtual-host name has to wait on DNS.  An apply that creates a bucket and then
 heads it would intermittently fail under virtual-host addressing.
 
 **Spaces errors carry the S3 code as an attribute.**
-:class:`SpacesRequestError` exposes ``status``, ``code`` and ``body``.  Callers
+``SpacesRequestError`` exposes ``status``, ``code`` and ``body``.  Callers
 distinguish "bucket absent" (recover) from "auth or throttle failed" (do not
 recover) on that code, so it is first-class rather than something to dig out of
 a message.  A failed ``HEAD`` has no body at all, so the status is used as the
